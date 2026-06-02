@@ -14,11 +14,17 @@ class Township(models.Model):
         ("OFF", "Electricity OFF"),
         ("UNCERTAIN", "Uncertain"),
     ]
-
+    
     name = models.CharField(
-        max_length=100,
-        unique=True
-    )
+        max_length=100, unique=True
+        )
+    name_mm = models.CharField(
+        max_length=100, blank=True
+        )
+    name_zh = models.CharField(
+        max_length=100, blank=True
+        )
+
 
     group = models.CharField(
         max_length=1,
@@ -154,8 +160,7 @@ class Schedule(models.Model):
     STATUS_CHOICES = [
         ("A", "Group A"),
         ("B", "Group B"),
-        ("A+B", "Group A and B"),
-        ("B+A", "Group B and A"),
+        ("All", "Group A and B"),
     ]
 
     date = models.DateField()
