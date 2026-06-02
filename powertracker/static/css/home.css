@@ -1,0 +1,48 @@
+.map-frame {
+    width: 100%;
+}
+
+.map-viewport {
+    height: 70vh;
+    min-height: 420px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    background: #ffffff;
+}
+
+.map-viewport.is-dragging {
+    cursor: grabbing;
+}
+
+.map-canvas {
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+}
+
+.map-canvas svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.map-controls {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 10;
+}
+
+.map-canvas path {
+    transition: opacity 0.15s ease, filter 0.15s ease;
+}
+
+.map-canvas .is-clickable {
+    cursor: pointer;
+}
+
+.map-canvas .is-hovered {
+    opacity: 0.75;
+    filter: brightness(1.08);
+}

@@ -1,0 +1,58 @@
+{% extends "powertracker/base.html" %}
+{% load static %}
+
+{% block title %}Home | Electricity Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="container py-4">
+    <h1 class="h3 mb-4">Yangon Townships</h1>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="map-frame border rounded bg-white overflow-hidden position-relative">
+                <div class="map-viewport" data-map-viewport>
+                    <div class="map-canvas" data-map-canvas>
+                        {% include "powertracker/partials/yangon_map.svg" %}
+                    </div>
+                </div>
+
+                <div class="map-controls btn-group btn-group-sm" role="group" aria-label="Map zoom controls">
+                    <button type="button" class="btn btn-light border" data-map-zoom="out">-</button>
+                    <button type="button" class="btn btn-light border" data-map-zoom="reset">Reset</button>
+                    <button type="button" class="btn btn-light border" data-map-zoom="in">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="h-100">
+                <h2 class="h5">Township Information</h2>
+                <p class="text-muted">
+                    Select a township from the map to view electricity status,
+                    group schedule, and reports.
+                </p>
+
+                <div class="border rounded p-3">
+                    <p class="mb-2">
+                        <strong>Group A:</strong> Scheduled electricity area.
+                    </p>
+                    <p class="mb-0">
+                        <strong>Group B:</strong> Scheduled electricity area.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ township_links|json_script:"township-links" }}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/map-zoom.js' %}"></script>
+<script src="{% static 'js/clickable-map.js' %}"></script>
+{% endblock %}
