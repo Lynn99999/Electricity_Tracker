@@ -61,6 +61,7 @@ class UserProfile(models.Model):
 
     favorite_townships = models.ManyToManyField(
         "Township",
+        through="FavoriteTownship",
         blank=True
     )
 
@@ -179,3 +180,16 @@ class Schedule(models.Model):
             f"{self.date} "
             f"{self.start_time}-{self.end_time}"
         )
+
+class FavoriteTownship(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    township = models.ForeignKey(Township, on_delete=models.CASCADE)
+    position = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["position", "created_at"]
+        unique_together = ["user_profile", "township"]
+
+    def __str__(self):
+        return f"{self.user_profile.user.username} - {self.township.name}"

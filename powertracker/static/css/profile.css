@@ -1,0 +1,108 @@
+.profile-page {
+    min-height: calc(100vh - 128px);
+}
+
+.profile-hero {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #222529;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.profile-panel {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.profile-label {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.profile-value {
+    font-weight: 700;
+    color: #222529;
+}
+
+.favorite-township-row {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.favorite-township-row.is-dragging {
+    opacity: 0.5;
+}
+
+.favorite-township-row:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.08);
+}
+
+.favorite-drag-handle {
+    color: #adb5bd;
+    cursor: grab;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.favorite-township-row:active .favorite-drag-handle {
+    cursor: grabbing;
+}
+
+.favorite-position {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: #222529;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.favorite-township-link {
+    min-width: 0;
+}
+
+.status-dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.status-on {
+    background: #9bd1e5;
+}
+
+.status-off {
+    background: #d7dce1;
+}
+
+.status-uncertain {
+    background: #f6d46b;
+}
+
+.empty-favorites {
+    border: 1px dashed #cfd4da;
+    border-radius: 10px;
+    background: #f8fafc;
+}

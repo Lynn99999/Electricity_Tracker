@@ -1,13 +1,25 @@
 function getStatusColor(status) {
     if (status === "ON") {
-        return "#4e598c"; // soft green
+        return "#9bd1e5"; 
     }
 
     if (status === "OFF") {
-        return "#ffffff"; // pale cool gray
+        return "#ffffff"; 
     }
 
-    return "#F2C94C"; // muted amber
+    return "#ffcf56"; 
+}
+
+function getScheduleStatusForTownship(township, activeGroup) {
+    if (activeGroup === "All") {
+        return "ON";
+    }
+
+    if (township.group === activeGroup) {
+        return "ON";
+    }
+
+    return "OFF";
 }
 
 function getTownshipLinks() {
@@ -36,6 +48,14 @@ function getTownshipShapes(townshipName) {
     });
 
     return shapes;
+}
+
+function setTownshipColor(township, status) {
+    const shapes = getTownshipShapes(township.name);
+
+    shapes.forEach(function (shape) {
+        shape.style.fill = getStatusColor(status);
+    });
 }
 
 function makeTownshipClickable(township) {
@@ -68,12 +88,36 @@ function makeTownshipClickable(township) {
     });
 }
 
+function setCurrentStatusColors(townshipLinks) {
+    townshipLinks.forEach(function (township) {
+        setTownshipColor(township, township.status);
+    });
+}
+
+function setSchedulePreviewColors(townshipLinks, activeGroup) {
+    townshipLinks.forEach(function (township) {
+        const status = getScheduleStatusForTownship(township, activeGroup);
+
+        setTownshipColor(township, status);
+    });
+}
+
 function initClickableMap() {
     const townshipLinks = getTownshipLinks();
 
     townshipLinks.forEach(function (township) {
         makeTownshipClickable(township);
     });
+
+    window.electricityMap = {
+        townships: townshipLinks,
+        setCurrentStatusColors: function () {
+            setCurrentStatusColors(townshipLinks);
+        },
+        setSchedulePreviewColors: function (activeGroup) {
+            setSchedulePreviewColors(townshipLinks, activeGroup);
+        },
+    };
 }
 
 initClickableMap();

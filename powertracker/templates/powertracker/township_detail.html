@@ -1,36 +1,144 @@
 {% extends "powertracker/base.html" %}
+{% load static %}
+
 {% block title %}{{ township.name }} | Electricity Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/township-detail.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="container py-4">
-    <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm mb-3">
-        Back to Map
-    </a>
+    <div class="row g-4 township-detail-layout">
+        <div class="col-lg-5 township-summary-column">
+            <aside class="township-summary">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+                            <h1 class="h3 mb-0">{{ township.name }}</h1>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <h1 class="h3 mb-3">{{ township.name }}</h1>
+                            {% if user.is_authenticated %}
+                                <form method="post" action="{% url 'toggle_favorite_township' township.id %}">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-light border favorite-button {% if is_favorite %}is-favorite{% endif %}"
+                                        aria-label="Toggle favorite"
+                                    >
+                                        &hearts;
+                                    </button>
+                                </form>
+                            {% else %}
+                                <a
+                                    href="{% url 'account_login' %}?next={{ request.path }}"
+                                    class="btn btn-light border favorite-button"
+                                    aria-label="Login to add favorites"
+                                >
+                                    &hearts;
+                                </a>
+                            {% endif %}
+                        </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <p class="mb-2">
-                        <strong>Burmese:</strong> {{ township.name_mm }}
-                    </p>
+                        <div class="township-mini-map mb-3" data-township-map>
+                            {% include "powertracker/partials/yangon_map.svg" %}
+                        </div>
 
-                    <p class="mb-2">
-                        <strong>Chinese:</strong> {{ township.name_zh }}
-                    </p>
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+                            <span class="small text-muted">Current status</span>
+                            <span class="badge {% if township.current_status == 'ON' %}text-bg-success{% elif township.current_status == 'OFF' %}text-bg-secondary{% else %}text-bg-warning{% endif %}">
+                                {{ township.current_status }}
+                            </span>
+                        </div>
 
-                    <p class="mb-2">
-                        <strong>Group:</strong> {{ township.group }}
-                    </p>
+                        <div class="status-legend mb-3">
+                            <div><span class="legend-swatch is-on"></span> On</div>
+                            <div><span class="legend-swatch is-off"></span> Off</div>
+                            <div><span class="legend-swatch is-uncertain"></span> Uncertain</div>
+                        </div>
 
-                    <p class="mb-0">
-                        <strong>Current status:</strong> {{ township.current_status }}
-                    </p>
+                        <div class="d-flex gap-2">
+                            {% if user.is_authenticated %}
+                                <button type="button" class="btn btn-outline-success report-button flex-fill" disabled aria-label="Thumb up">
+                                    &#128077;
+                                </button>
+                                <button type="button" class="btn btn-outline-danger report-button flex-fill" disabled aria-label="Thumb down">
+                                    &#128078;
+                                </button>
+                            {% else %}
+                                <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-outline-success report-button flex-fill" aria-label="Login to thumb up">
+                                    &#128077;
+                                </a>
+                                <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-outline-danger report-button flex-fill" aria-label="Login to thumb down">
+                                    &#128078;
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <a href="{% url 'home' %}" class="btn btn-dark w-100 mt-3">
+                            Back Home
+                        </a>
+                    </div>
                 </div>
+            </aside>
+        </div>
+
+        <div class="col-lg-7 township-schedule-column">
+            <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+                <h2 class="h4 mb-0">Schedule</h2>
+                <span class="badge text-bg-light border text-dark">Group {{ township.group }}</span>
+            </div>
+
+            <div class="d-grid gap-3">
+                {% for day in weekly_timetable %}
+                    <section class="schedule-day card shadow-sm {% if day.is_today %}is-today{% endif %}">
+                        <div class="card-header bg-white d-flex align-items-center justify-content-between gap-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="schedule-calendar">&#9633;</span>
+                                <strong>{{ day.date }}</strong>
+                                {% if day.is_yesterday %}
+                                    <span class="badge text-bg-light border text-muted">Yesterday</span>
+                                {% elif day.is_today %}
+                                    <span class="badge text-bg-warning">Today</span>
+                                {% endif %}
+                            </div>
+                            <span class="text-muted">{{ day.day }}</span>
+                        </div>
+
+                        <div class="card-body">
+                            {% if day.slots %}
+                                <div class="schedule-slot-grid">
+                                    {% for slot in day.slots %}
+                                        <div class="schedule-slot {% if slot.status == 'ON' %}is-on{% else %}is-off{% endif %}">
+                                            <div class="schedule-slot-time">{{ slot.time }}</div>
+                                            <div class="schedule-slot-icon">
+                                                {% if slot.status == 'ON' %}
+                                                    &#9889;
+                                                {% else %}
+                                                    &empty;
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="text-muted mb-0">No schedule</p>
+                            {% endif %}
+                        </div>
+                    </section>
+                {% endfor %}
             </div>
         </div>
     </div>
+
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    window.townshipDetail = {
+        name: "{{ township.name|escapejs }}",
+        status: "{{ township.current_status|escapejs }}"
+    };
+</script>
+<script src="{% static 'js/township-detail.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,189 @@
+{% extends "powertracker/base.html" %}
+{% load static %}
+
+{% block title %}User Profile | Electricity Tracker{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="profile-page container py-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="profile-hero p-4 mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="profile-avatar">
+                {{ request.user.username|first|upper }}
+            </div>
+
+            <div>
+                <h1 class="h3 mb-1">User Profile</h1>
+                <p class="text-secondary mb-0">Manage your account and favorite townships.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="profile-panel p-4 h-100">
+                <h2 class="h5 mb-4">Account</h2>
+
+                <div class="mb-4">
+                    <p class="profile-label">Username</p>
+
+                    <div id="username-display" class="d-flex align-items-center gap-2">
+                        <span class="profile-value">{{ request.user.username }}</span>
+
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                            id="edit-username-button"
+                            aria-label="Edit username"
+                        >
+                            &#9998;
+                        </button>
+                    </div>
+
+                    <form
+                        method="post"
+                        action="{% url 'profile_update_username' %}"
+                        id="username-form"
+                        class="d-none mt-2"
+                    >
+                        {% csrf_token %}
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <input
+                                type="text"
+                                name="username"
+                                value="{{ request.user.username }}"
+                                class="form-control form-control-sm"
+                                required
+                            >
+
+                            <button type="submit" class="btn btn-sm btn-dark">
+                                Save
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                id="cancel-username-button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mb-4">
+                    <p class="profile-label">Email</p>
+                    <p class="profile-value mb-2">{{ request.user.email|default:"No email set" }}</p>
+                    <a href="{% url 'account_email' %}" class="btn btn-outline-secondary">
+                        Manage Email
+                    </a>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">
+                        Change Password
+                    </a>
+
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="profile-panel p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h5 mb-0">Favorite Townships</h2>
+                    <span class="badge text-bg-light border">
+                        {{ favorite_items|length }} / {{ max_favorite_townships }}
+                    </span>
+                </div>
+
+                {% if favorite_items %}
+                    <p class="text-secondary small mb-3">
+                        Drag townships to choose your default order.
+                    </p>
+
+                    <div
+                        class="favorite-list d-grid gap-2"
+                        data-favorite-list
+                        data-reorder-url="{% url 'reorder_favorite_townships' %}"
+                    >
+                        {% for favorite in favorite_items %}
+                            <div
+                                class="favorite-township-row d-flex align-items-center gap-3 p-3"
+                                draggable="true"
+                                data-township-id="{{ favorite.township.id }}"
+                            >
+                                <span class="favorite-drag-handle" aria-hidden="true">
+                                    ::
+                                </span>
+
+                                <span class="favorite-position">
+                                    {{ favorite.position }}
+                                </span>
+
+                                <a
+                                    href="{% url 'township_detail' favorite.township.id %}"
+                                    class="favorite-township-link flex-grow-1 text-decoration-none text-dark"
+                                >
+                                    <h3 class="h6 mb-1">{{ favorite.township.name }}</h3>
+                                    <span class="d-flex align-items-center gap-2 text-secondary small">
+                                        <span class="status-dot status-{{ favorite.township.current_status|lower }}"></span>
+                                        {{ favorite.township.current_status }}
+                                    </span>
+                                </a>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'remove_favorite_township' favorite.township.id %}"
+                                    class="mb-0"
+                                >
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-danger"
+                                        aria-label="Remove {{ favorite.township.name }} from favorites"
+                                    >
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-favorites p-4 text-center">
+                        <p class="fw-semibold mb-1">No favorite townships yet.</p>
+                        <p class="text-secondary mb-3">
+                            Open a township detail page and tap the heart icon. You can keep up to {{ max_favorite_townships }} favorites.
+                        </p>
+                        <a href="{% url 'home' %}" class="btn btn-dark">
+                            Browse Map
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

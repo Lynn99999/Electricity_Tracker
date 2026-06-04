@@ -2,7 +2,14 @@ from django.contrib import admin
 from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 
-from .models import Schedule, Township, TownshipStatistics, UserProfile, UserReport
+from .models import (
+    FavoriteTownship,
+    Schedule,
+    Township,
+    TownshipStatistics,
+    UserProfile,
+    UserReport,
+)
 
 
 class TownshipResource(resources.ModelResource):
@@ -47,5 +54,6 @@ class ScheduleAdmin(ImportExportModelAdmin):
     list_filter = ("date", "active_group")
 
 admin.site.register(UserProfile)
+admin.site.register(FavoriteTownship)
 admin.site.register(UserReport)
 admin.site.register(TownshipStatistics)

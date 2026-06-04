@@ -1,10 +1,11 @@
 .map-frame {
     width: 100%;
+    overflow: hidden;
 }
 
 .map-viewport {
-    height: 70vh;
-    min-height: 420px;
+    height: clamp(380px, calc(100vh - 280px), 64vh);
+    min-height: 380px;
     overflow: hidden;
     cursor: grab;
     touch-action: none;
@@ -45,4 +46,85 @@
 .map-canvas .is-hovered {
     opacity: 0.75;
     filter: brightness(1.08);
+}
+
+.schedule-scrubber {
+    height: 92px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.schedule-selected-time {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.5rem;
+    z-index: 2;
+}
+
+.schedule-scroll {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    max-width: 100%;
+}
+
+.schedule-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.schedule-track {
+    display: flex;
+    align-items: stretch;
+    gap: 0.75rem;
+    height: 100%;
+    min-width: max-content;
+    padding: 1rem 5rem 0.75rem 1rem;
+}
+
+.schedule-hour {
+    flex: 0 0 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.7rem;
+    border: 0;
+    background: transparent;
+    color: #6c757d;
+    font-weight: 600;
+    padding: 0;
+}
+
+.schedule-hour-label {
+    font-size: 0.9rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.schedule-hour-marker {
+    width: 22px;
+    height: 8px;
+    border-radius: 999px;
+    background: #c7ccd1;
+}
+
+.schedule-hour.is-active {
+    color: #212529;
+}
+
+.schedule-hour.is-active .schedule-hour-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #ffd84d;
+    box-shadow: 0 0 14px rgba(255, 216, 77, 0.9);
+}
+
+.schedule-hour.is-active .schedule-hour-marker::before {
+    content: "💡";
+    font-size: 1rem;
+    line-height: 1;
 }

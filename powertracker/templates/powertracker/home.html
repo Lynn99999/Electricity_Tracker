@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block content %}
-<section class="container py-4">
-    <h1 class="h3 mb-4">Yangon Townships</h1>
+<section class="container py-3">
+    <h1 class="h3 mb-3">Yangon Townships</h1>
 
     <div class="row g-4">
         <div class="col-lg-8">
@@ -24,6 +24,15 @@
                     <button type="button" class="btn btn-light border" data-map-zoom="out">-</button>
                     <button type="button" class="btn btn-light border" data-map-zoom="reset">Reset</button>
                     <button type="button" class="btn btn-light border" data-map-zoom="in">+</button>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="schedule-scrubber position-relative border rounded bg-white shadow-sm" data-schedule-timeline>
+                    <span class="schedule-selected-time badge text-bg-warning" data-schedule-selected-time></span>
+                    <div class="schedule-scroll overflow-auto">
+                        <div class="schedule-track" data-schedule-track></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,10 +58,12 @@
     </div>
 
     {{ township_links|json_script:"township-links" }}
+    {{ timeline_points|json_script:"timeline-points" }}
 </section>
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/map-zoom.js' %}"></script>
 <script src="{% static 'js/clickable-map.js' %}"></script>
+<script src="{% static 'js/schedule-map-preview.js' %}"></script>
 {% endblock %}
