@@ -5,11 +5,44 @@ from celery.schedules import crontab
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-1vdh$#matt6pqqyv=c&fe+*nbt4k+sh^&wqy3yobm196bu88_c'
+def env_bool(name, default=False):
+    value = os.environ.get(name)
 
-DEBUG = True
+    if value is None:
+        return default
 
-ALLOWED_HOSTS = ['*']
+    return value.lower() in ["1", "true", "yes", "on"]
+
+
+def env_list(name, default=None):
+    value = os.environ.get(name)
+
+    if not value:
+        return default or []
+
+    return [
+        item.strip()
+        for item in value.split(",")
+        if item.strip()
+    ]
+
+
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-1vdh$#matt6pqqyv=c&fe+*nbt4k+sh^&wqy3yobm196bu88_c',
+)
+
+DEBUG = env_bool('DEBUG', True)
+
+ALLOWED_HOSTS = env_list(
+    'ALLOWED_HOSTS',
+    ['localhost', '127.0.0.1', '0.0.0.0', '.pythonanywhere.com'],
+)
+
+CSRF_TRUSTED_ORIGINS = env_list(
+    'CSRF_TRUSTED_ORIGINS',
+    ['https://*.pythonanywhere.com'],
+)
 
 
 INSTALLED_APPS = [
@@ -74,7 +107,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ.get('SQLITE_PATH', BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -114,7 +147,8 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
