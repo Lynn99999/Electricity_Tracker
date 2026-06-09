@@ -1,0 +1,105 @@
+.offline-page {
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.offline-shell {
+    max-width: 1080px;
+}
+
+.offline-meta,
+.offline-schedule-day,
+.offline-township-list,
+.offline-empty {
+    border: 0;
+}
+
+.offline-calendar {
+    color: #f59f00;
+    font-size: 1rem;
+}
+
+.offline-group-title {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.offline-selector {
+    flex-wrap: wrap;
+}
+
+.offline-township-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.offline-township-chip {
+    border: 1px solid #dee2e6;
+    border-radius: 999px;
+    padding: 0.35rem 0.65rem;
+    background: #ffffff;
+    color: #495057;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.offline-slot-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(112px, 1fr));
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+}
+
+.offline-slot {
+    min-height: 74px;
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.offline-slot.is-on {
+    color: #17485a;
+    background: #d8edf5;
+    border-color: #9bd1e5;
+}
+
+.offline-slot.is-off {
+    color: #5f6469;
+    background: #ffffff;
+    border-color: #d7dce1;
+}
+
+.offline-slot-time {
+    font-size: 0.85rem;
+}
+
+.offline-slot-status {
+    font-size: 0.95rem;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.offline-schedule-day.is-today {
+    border: 1px solid #ffc107;
+}
+
+@media (max-width: 575.98px) {
+    .offline-meta .card-body {
+        align-items: stretch;
+    }
+
+    .offline-selector,
+    .offline-selector .btn {
+        width: 100%;
+    }
+}

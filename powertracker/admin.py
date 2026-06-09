@@ -3,11 +3,14 @@ from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 
 from .models import (
+    ContactMessage,
     FavoriteTownship,
     Schedule,
+    ScheduleNotification,
     Township,
     TownshipStatistics,
     UserProfile,
+    UserPushSubscription,
     UserReport,
 )
 
@@ -55,5 +58,52 @@ class ScheduleAdmin(ImportExportModelAdmin):
 
 admin.site.register(UserProfile)
 admin.site.register(FavoriteTownship)
-admin.site.register(UserReport)
+@admin.register(UserReport)
+class UserReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "township",
+        "township_status",
+        "reported_status",
+        "window_start",
+        "window_end",
+        "reported_at",
+    )
+    list_filter = ("reported_status", "township_status", "window_start")
+    search_fields = ("user__username", "township__name")
+    ordering = ("-reported_at",)
+
+
 admin.site.register(TownshipStatistics)
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = (
+        "created_at",
+        "category",
+        "name",
+        "email",
+        "township",
+        "is_resolved",
+    )
+    list_filter = ("category", "is_resolved", "created_at")
+    search_fields = ("name", "email", "message", "township__name", "user__username")
+    readonly_fields = ("created_at",)
+    ordering = ("-created_at",)
+
+
+@admin.register(UserPushSubscription)
+class UserPushSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ("user", "is_active", "created_at", "updated_at")
+    list_filter = ("is_active", "created_at")
+    search_fields = ("user__username", "endpoint")
+    readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(ScheduleNotification)
+class ScheduleNotificationAdmin(admin.ModelAdmin):
+    list_display = ("user", "township", "schedule", "sent_at")
+    list_filter = ("sent_at", "township")
+    search_fields = ("user__username", "township__name")
+    readonly_fields = ("sent_at",)

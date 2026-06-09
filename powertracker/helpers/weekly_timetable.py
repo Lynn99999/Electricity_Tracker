@@ -12,17 +12,21 @@ def format_time(time):
     return time.strftime("%I%p").lstrip("0")
 
 
-def get_slot_status(township, schedule):
+def get_slot_status_for_group(group, schedule):
     if schedule.active_group == "All":
         return "ON"
 
-    if schedule.active_group == township.group:
+    if schedule.active_group == group:
         return "ON"
 
     return "OFF"
 
 
-def get_weekly_timetable_for_township(township):
+def get_slot_status(township, schedule):
+    return get_slot_status_for_group(township.group, schedule)
+
+
+def get_weekly_timetable_for_group(group):
     today = get_current_myanmar_time().date()
     start_date = today - timedelta(days=1)
     end_date = today + timedelta(days=7)
@@ -46,7 +50,7 @@ def get_weekly_timetable_for_township(township):
         for schedule in day_schedules:
             slots.append({
                 "time": f"{format_time(schedule.start_time)} - {format_time(schedule.end_time)}",
-                "status": get_slot_status(township, schedule),
+                "status": get_slot_status_for_group(group, schedule),
             })
 
         timetable.append({
@@ -60,3 +64,7 @@ def get_weekly_timetable_for_township(township):
         current_date += timedelta(days=1)
 
     return timetable
+
+
+def get_weekly_timetable_for_township(township):
+    return get_weekly_timetable_for_group(township.group)

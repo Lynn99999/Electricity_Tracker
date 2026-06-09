@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import get_language
 
 class Township(models.Model):
 
@@ -44,6 +45,18 @@ class Township(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def localized_name(self):
+        language = (get_language() or "en").lower()
+
+        if language.startswith("my") and self.name_mm:
+            return self.name_mm
+
+        if language.startswith("zh") and self.name_zh:
+            return self.name_zh
+
+        return self.name
+
 class UserProfile(models.Model):
 
     user = models.OneToOneField(
@@ -51,23 +64,11 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE
     )
 
-    correct_rate = models.FloatField(
-        default=100.0
-    )
-
-    report_count = models.PositiveIntegerField(
-        default=0
-    )
-
     favorite_townships = models.ManyToManyField(
         "Township",
         through="FavoriteTownship",
         blank=True
     )
-
-    is_verified = models.BooleanField(
-    default=False
-)
 
     def __str__(self):
         return self.user.username
@@ -80,9 +81,9 @@ class UserReport(models.Model):
         ("UNCERTAIN", "UNCERTAIN"),
     ]
 
-    VOTE_CHOICES = [
-        ("UP", "Thumb Up"),
-        ("DOWN", "Thumb Down"),
+    REPORTED_STATUS_CHOICES = [
+        ("ON", "ON"),
+        ("OFF", "OFF"),
     ]
 
     user = models.ForeignKey(
@@ -100,14 +101,31 @@ class UserReport(models.Model):
         choices=STATUS_CHOICES
     )
 
-    vote = models.CharField(
-        max_length=4,
-        choices=VOTE_CHOICES
+    reported_status = models.CharField(
+        max_length=3,
+        choices=REPORTED_STATUS_CHOICES
     )
 
+    window_start = models.DateTimeField()
+
+    window_end = models.DateTimeField()
+
     reported_at = models.DateTimeField(
-        auto_now_add=True
+        auto_now=True
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "township", "window_start"],
+                name="unique_user_township_report_window"
+            )
+        ]
+
+        indexes = [
+            models.Index(fields=["window_start"]),
+            models.Index(fields=["township", "window_start"]),
+        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.township.name}"
@@ -130,11 +148,11 @@ class TownshipStatistics(models.Model):
         choices=STATUS_CHOICES
     )
 
-    thumb_up_count = models.PositiveIntegerField(
+    reported_on_count = models.PositiveIntegerField(
         default=0
     )
 
-    thumb_down_count = models.PositiveIntegerField(
+    reported_off_count = models.PositiveIntegerField(
         default=0
     )
 
@@ -193,3 +211,115 @@ class FavoriteTownship(models.Model):
 
     def __str__(self):
         return f"{self.user_profile.user.username} - {self.township.name}"
+
+
+class ContactMessage(models.Model):
+
+    CATEGORY_CHOICES = [
+        ("STATUS", "Wrong electricity status"),
+        ("SCHEDULE", "Schedule data issue"),
+        ("ACCOUNT", "Account or login issue"),
+        ("FEEDBACK", "Feedback"),
+        ("OTHER", "Other"),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    township = models.ForeignKey(
+        Township,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    name = models.CharField(max_length=120)
+
+    email = models.EmailField()
+
+    category = models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES
+    )
+
+    message = models.TextField()
+
+    is_resolved = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["category", "is_resolved"]),
+            models.Index(fields=["created_at"]),
+        ]
+
+    def __str__(self):
+        return f"{self.get_category_display()} - {self.email}"
+
+
+class UserPushSubscription(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="push_subscriptions",
+    )
+
+    endpoint = models.URLField(unique=True)
+
+    p256dh = models.TextField()
+
+    auth = models.TextField()
+
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["user", "is_active"]),
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} push subscription"
+
+
+class ScheduleNotification(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="schedule_notifications",
+    )
+
+    township = models.ForeignKey(
+        Township,
+        on_delete=models.CASCADE,
+    )
+
+    schedule = models.ForeignKey(
+        Schedule,
+        on_delete=models.CASCADE,
+    )
+
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "township", "schedule"],
+                name="unique_user_township_schedule_notification",
+            )
+        ]
+        indexes = [
+            models.Index(fields=["user", "sent_at"]),
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} - {self.township.name} - {self.schedule}"

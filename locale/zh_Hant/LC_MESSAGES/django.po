@@ -1,0 +1,311 @@
+msgid ""
+msgstr "Project-Id-Version: electricity-tracker 1.0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2026-06-09 00:00+0000\nPO-Revision-Date: 2026-06-09 00:00+0000\nLast-Translator: Codex <codex@example.com>\nLanguage-Team: \nLanguage: zh_Hant\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Account"
+msgstr "帳號"
+
+msgid "Account issues"
+msgstr "帳號問題"
+
+msgid "Already have an account?"
+msgstr "已經有帳號了嗎？"
+
+msgid "Back Home"
+msgstr "返回首頁"
+
+msgid "Back to Profile"
+msgstr "返回個人資料"
+
+msgid "Back to top"
+msgstr "回到頂部"
+
+msgid "Before You Send"
+msgstr "送出前"
+
+msgid "Browse Map"
+msgstr "瀏覽地圖"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Category"
+msgstr "類別"
+
+msgid "Change Password"
+msgstr "變更密碼"
+
+msgid "Charge laptop, 30 minutes, needs electricity"
+msgstr "筆電充電，30 分鐘，需要用電"
+
+msgid "Check Electricity Status"
+msgstr "查詢供電狀態"
+
+msgid "Check Status"
+msgstr "查詢狀態"
+
+msgid "Choose a township, date, and time to check the electricity status."
+msgstr "請選擇鎮區、日期和時間來查詢供電狀態。"
+
+msgid "Choose category"
+msgstr "選擇類別"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Confirm password"
+msgstr "確認密碼"
+
+msgid "Contact Us"
+msgstr "聯絡我們"
+
+msgid "Cook dinner, 45 minutes, needs electricity"
+msgstr "準備晚餐，45 分鐘，需要用電"
+
+msgid "Create Account"
+msgstr "建立帳號"
+
+msgid "Create account"
+msgstr "建立帳號"
+
+msgid "Current map status"
+msgstr "目前地圖狀態"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Delete"
+msgstr "刪除"
+
+msgid "Do you have electricity now?"
+msgstr "你現在有電嗎？"
+
+msgid "Don't have an account?"
+msgstr "還沒有帳號嗎？"
+
+msgid "Download .ics"
+msgstr "下載 .ics"
+
+msgid "Drag townships to choose your default order."
+msgstr "拖曳鎮區來設定你的預設順序。"
+
+msgid "Edit username"
+msgstr "編輯使用者名稱"
+
+msgid "Efficiency Tips"
+msgstr "效率建議"
+
+msgid "Electricity Tracker"
+msgstr "電力追蹤器"
+
+msgid "Email"
+msgstr "電子郵件"
+
+msgid "Email is not configured yet."
+msgstr "尚未設定電子郵件。"
+
+msgid "Example:"
+msgstr "範例："
+
+msgid "Expected from schedule"
+msgstr "官方排程預期"
+
+msgid "Favorite Townships"
+msgstr "收藏鎮區"
+
+msgid "Forgot password?"
+msgstr "忘記密碼？"
+
+msgid "Gemini did not return schedule blocks. Try adding clearer task durations."
+msgstr "Gemini 沒有回傳時間區塊。請試著把每個任務需要的時間寫清楚。"
+
+msgid "Generate Plan"
+msgstr "產生計畫"
+
+msgid "Generated Plan"
+msgstr "產生的計畫"
+
+msgid "Home"
+msgstr "首頁"
+
+msgid "Include township, time, and whether electricity was actually on or off."
+msgstr "請包含鎮區、時間，以及實際上是否有電。"
+
+msgid "Language"
+msgstr "語言"
+
+msgid "Login"
+msgstr "登入"
+
+msgid "Login to add favorites"
+msgstr "登入後加入收藏"
+
+msgid "Login to thumb down"
+msgstr "登入後回報沒電"
+
+msgid "Login to thumb up"
+msgstr "登入後回報有電"
+
+msgid "Logout"
+msgstr "登出"
+
+msgid "Manage email"
+msgstr "管理電子郵件"
+
+msgid "Manage your account and favorite townships."
+msgstr "管理你的帳號和收藏鎮區。"
+
+msgid "Map Colors"
+msgstr "地圖顏色"
+
+msgid "Map zoom controls"
+msgstr "地圖縮放控制"
+
+msgid "Message"
+msgstr "訊息"
+
+msgid "Myanmar time"
+msgstr "緬甸時間"
+
+msgid "Name"
+msgstr "姓名"
+
+msgid "No email set"
+msgstr "尚未設定電子郵件"
+
+msgid "No favorite townships yet."
+msgstr "還沒有收藏鎮區。"
+
+msgid "No schedule"
+msgstr "沒有排程"
+
+msgid "OFF"
+msgstr "沒電"
+
+msgid "ON"
+msgstr "有電"
+
+msgid "Off"
+msgstr "沒電"
+
+msgid "On"
+msgstr "有電"
+
+msgid "Open a township detail page and tap the heart icon. You can keep up to %(max_favorite_townships)s favorites."
+msgstr "打開鎮區詳情頁並點選愛心圖示。最多可以收藏 %(max_favorite_townships)s 個鎮區。"
+
+msgid "Optional"
+msgstr "選填"
+
+msgid "Output language"
+msgstr "輸出語言"
+
+msgid "Password"
+msgstr "密碼"
+
+msgid "Plan your tasks around your township's electricity ON hours."
+msgstr "依照你所在鎮區的有電時間安排任務。"
+
+msgid "Read notes, 60 minutes, no electricity needed"
+msgstr "複習筆記，60 分鐘，不需要用電"
+
+msgid "Remember me"
+msgstr "記住我"
+
+msgid "Remove favorite township"
+msgstr "移除收藏鎮區"
+
+msgid "Report electricity off"
+msgstr "回報沒電"
+
+msgid "Report electricity on"
+msgstr "回報有電"
+
+msgid "Reset"
+msgstr "重設"
+
+msgid "Save"
+msgstr "儲存"
+
+msgid "Schedule"
+msgstr "排程"
+
+msgid "Schedule issues"
+msgstr "排程問題"
+
+msgid "Select township"
+msgstr "選擇鎮區"
+
+msgid "Send Message"
+msgstr "送出訊息"
+
+msgid "Status issues"
+msgstr "狀態問題"
+
+msgid "Study Django, 90 minutes, high priority"
+msgstr "學習 Django，90 分鐘，高優先度"
+
+msgid "Support"
+msgstr "支援"
+
+msgid "Support email"
+msgstr "支援信箱"
+
+msgid "Tasks"
+msgstr "任務"
+
+msgid "Tell us about wrong status, schedule data issues, account problems, or product feedback."
+msgstr "告訴我們錯誤狀態、排程資料問題、帳號問題，或產品回饋。"
+
+msgid "Tell us the date and time block that looked wrong."
+msgstr "請告訴我們看起來錯誤的日期和時段。"
+
+msgid "Time"
+msgstr "時間"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Todolist Planner"
+msgstr "待辦計畫器"
+
+msgid "Toggle favorite"
+msgstr "切換收藏"
+
+msgid "Township"
+msgstr "鎮區"
+
+msgid "Uncertain"
+msgstr "不確定"
+
+msgid "Use the email connected to your account when possible."
+msgstr "可以的話，請使用連結到你帳號的電子郵件。"
+
+msgid "User Profile"
+msgstr "使用者個人資料"
+
+msgid "User profile"
+msgstr "使用者個人資料"
+
+msgid "Username"
+msgstr "使用者名稱"
+
+msgid "Username or email"
+msgstr "使用者名稱或電子郵件"
+
+msgid "Yangon Electricity Tracker"
+msgstr "仰光電力追蹤器"
+
+msgid "Yangon Townships"
+msgstr "仰光鎮區"
+
+msgid "Yesterday"
+msgstr "昨天"
+
+msgid "You can download it as an .ics file and import it into Google Calendar, Apple Calendar, or Outlook."
+msgstr "你可以下載 .ics 檔，並匯入 Google Calendar、Apple Calendar 或 Outlook。"
+
+msgid "Your generated schedule will appear here."
+msgstr "產生的計畫會顯示在這裡。"
+
+msgid "at"
+msgstr "於"

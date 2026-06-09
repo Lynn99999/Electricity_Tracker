@@ -1,0 +1,161 @@
+{% extends "powertracker/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Contact Us" %} | {% trans "Electricity Tracker" %}{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <p class="text-secondary fw-semibold mb-2">{% trans "Support" %}</p>
+                    <h1 class="h2 mb-3">{% trans "Contact Us" %}</h1>
+                    <p class="text-secondary mb-4">
+                        {% trans "Tell us about wrong status, schedule data issues, account problems, or product feedback." %}
+                    </p>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="id_name" class="form-label">{% trans "Name" %}</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="id_name"
+                                    value="{{ form_data.name|default:'' }}"
+                                    class="form-control {% if errors.name %}is-invalid{% endif %}"
+                                    required
+                                >
+                                {% if errors.name %}
+                                    <div class="invalid-feedback">{{ errors.name }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="id_email" class="form-label">{% trans "Email" %}</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="id_email"
+                                    value="{{ form_data.email|default:'' }}"
+                                    class="form-control {% if errors.email %}is-invalid{% endif %}"
+                                    required
+                                >
+                                {% if errors.email %}
+                                    <div class="invalid-feedback">{{ errors.email }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="id_category" class="form-label">{% trans "Category" %}</label>
+                                <select
+                                    name="category"
+                                    id="id_category"
+                                    class="form-select {% if errors.category %}is-invalid{% endif %}"
+                                    required
+                                >
+                                    <option value="">{% trans "Choose category" %}</option>
+                                    {% for value, label in category_choices %}
+                                        <option value="{{ value }}" {% if form_data.category == value %}selected{% endif %}>
+                                            {{ label }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if errors.category %}
+                                    <div class="invalid-feedback">{{ errors.category }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="id_township" class="form-label">{% trans "Township" %}</label>
+                                <select
+                                    name="township"
+                                    id="id_township"
+                                    class="form-select {% if errors.township %}is-invalid{% endif %}"
+                                >
+                                    <option value="">{% trans "Optional" %}</option>
+                                    {% for township in townships %}
+                                        <option value="{{ township.id }}" {% if form_data.township == township.id|stringformat:'s' %}selected{% endif %}>
+                                            {{ township.localized_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if errors.township %}
+                                    <div class="invalid-feedback">{{ errors.township }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label for="id_message" class="form-label">{% trans "Message" %}</label>
+                                <textarea
+                                    name="message"
+                                    id="id_message"
+                                    rows="6"
+                                    class="form-control {% if errors.message %}is-invalid{% endif %}"
+                                    required
+                                >{{ form_data.message|default:'' }}</textarea>
+                                {% if errors.message %}
+                                    <div class="invalid-feedback">{{ errors.message }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <button type="submit" class="btn btn-dark">
+                                {% trans "Send Message" %}
+                            </button>
+                            <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                                {% trans "Back to Profile" %}
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-body p-4">
+                    <h2 class="h5 mb-3">{% trans "Before You Send" %}</h2>
+                    <div class="d-grid gap-3">
+                        <div class="border rounded-3 p-3">
+                            <p class="small text-secondary mb-1">{% trans "Status issues" %}</p>
+                            <p class="mb-0">
+                                {% trans "Include township, time, and whether electricity was actually on or off." %}
+                            </p>
+                        </div>
+                        <div class="border rounded-3 p-3">
+                            <p class="small text-secondary mb-1">{% trans "Schedule issues" %}</p>
+                            <p class="mb-0">
+                                {% trans "Tell us the date and time block that looked wrong." %}
+                            </p>
+                        </div>
+                        <div class="border rounded-3 p-3">
+                            <p class="small text-secondary mb-1">{% trans "Account issues" %}</p>
+                            <p class="mb-0">
+                                {% trans "Use the email connected to your account when possible." %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <p class="small text-secondary mb-1">{% trans "Support email" %}</p>
+                    {% if contact_email %}
+                        <a href="mailto:{{ contact_email }}" class="fw-semibold text-dark">
+                            {{ contact_email }}
+                        </a>
+                    {% else %}
+                        <span class="fw-semibold text-dark">{% trans "Email is not configured yet." %}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

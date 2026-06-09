@@ -1,0 +1,140 @@
+{% extends "powertracker/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Todolist Planner" %} | {% trans "Electricity Tracker" %}{% endblock %}
+
+{% block content %}
+<section class="container py-4">
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="border rounded bg-white p-4">
+                <h1 class="h3 mb-2">{% trans "Todolist Planner" %}</h1>
+                <p class="text-secondary mb-4">
+                    {% trans "Plan your tasks around your township's electricity ON hours." %}
+                </p>
+
+                <form method="post" class="d-grid gap-3">
+                    {% csrf_token %}
+
+                    <div>
+                        <label for="planner-township" class="form-label">{% trans "Township" %}</label>
+                        <select
+                            id="planner-township"
+                            name="township"
+                            class="form-select"
+                            required
+                        >
+                            <option value="">{% trans "Select township" %}</option>
+                            {% for township in townships %}
+                                <option
+                                    value="{{ township.id }}"
+                                    {% if form_data.township|stringformat:"s" == township.id|stringformat:"s" %}selected{% endif %}
+                                >
+                                    {{ township.localized_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="planner-language" class="form-label">{% trans "Output language" %}</label>
+                        <select
+                            id="planner-language"
+                            name="language"
+                            class="form-select"
+                            required
+                        >
+                            {% for code, label in planner_languages.items %}
+                                <option
+                                    value="{{ code }}"
+                                    {% if form_data.language == code %}selected{% endif %}
+                                >
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="planner-tasks" class="form-label">{% trans "Tasks" %}</label>
+                        <textarea
+                            id="planner-tasks"
+                            name="tasks"
+                            class="form-control"
+                            rows="9"
+                            placeholder="{% trans 'Example:' %}&#10;- {% trans 'Charge laptop, 30 minutes, needs electricity' %}&#10;- {% trans 'Study Django, 90 minutes, high priority' %}&#10;- {% trans 'Cook dinner, 45 minutes, needs electricity' %}&#10;- {% trans 'Read notes, 60 minutes, no electricity needed' %}"
+                            required
+                        >{{ form_data.tasks }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark">
+                        {% trans "Generate Plan" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="border rounded bg-white p-4 h-100">
+                <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+                    <h2 class="h4 mb-0">{% trans "Generated Plan" %}</h2>
+
+                    {% if planner_data and planner_data.events %}
+                        <form method="post" action="{% url 'download_todo_planner_ics' %}" class="mb-0">
+                            <!-- {% csrf_token %} -->
+                            <textarea name="planner_json" class="d-none">{{ planner_json }}</textarea>
+                            <button type="submit" class="btn btn-outline-secondary">
+                                {% trans "Download .ics" %}
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                {% if planner_data %}
+                    {% if planner_data.summary %}
+                        <p class="text-secondary">{{ planner_data.summary }}</p>
+                    {% endif %}
+
+                    {% if planner_data.events %}
+                        <div class="d-grid gap-3 mb-4">
+                            {% for event in planner_data.events %}
+                                <div class="border rounded p-3">
+                                    <h3 class="h6 mb-1">{{ event.title }}</h3>
+                                    <p class="small text-secondary mb-2">
+                                        {{ event.start }} - {{ event.end }}
+                                    </p>
+                                    {% if event.description %}
+                                        <p class="mb-0">{{ event.description }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-secondary mb-0">
+                            {% trans "Gemini did not return schedule blocks. Try adding clearer task durations." %}
+                        </p>
+                    {% endif %}
+
+                    {% if planner_data.tips %}
+                        <h3 class="h6">{% trans "Efficiency Tips" %}</h3>
+                        <ul class="mb-0">
+                            {% for tip in planner_data.tips %}
+                                <li>{{ tip }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% else %}
+                    <div class="text-secondary">
+                        <p class="mb-2">
+                            {% trans "Your generated schedule will appear here." %}
+                        </p>
+                        <p class="mb-0">
+                            {% trans "You can download it as an .ics file and import it into Google Calendar, Apple Calendar, or Outlook." %}
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,13 +1,14 @@
 {% extends "powertracker/base.html" %}
+{% load i18n %}
 
-{% block title %}Login | Electricity Tracker{% endblock %}
+{% block title %}{% trans "Login" %} | {% trans "Electricity Tracker" %}{% endblock %}
 
 {% block content %}
 <section class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5">
             <div class="border rounded bg-white p-4">
-                <h1 class="h3 mb-2">Login</h1>
+                <h1 class="h3 mb-2">{% trans "Login" %}</h1>
                 <p> </p>
                 <form method="post" action="{% url 'account_login' %}">
                     {% csrf_token %}
@@ -23,7 +24,7 @@
                     {% endif %}
 
                     <div class="mb-3">
-                        <label for="id_login" class="form-label">Username or email</label>
+                        <label for="id_login" class="form-label">{% trans "Username or email" %}</label>
                         <input
                             type="text"
                             name="login"
@@ -39,7 +40,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_password" class="form-label">Password</label>
+                        <label for="id_password" class="form-label">{% trans "Password" %}</label>
                         <input
                             type="password"
                             name="password"
@@ -61,23 +62,23 @@
                                 id="id_remember"
                                 class="form-check-input"
                             >
-                            <label for="id_remember" class="form-check-label">Remember me</label>
+                            <label for="id_remember" class="form-check-label">{% trans "Remember me" %}</label>
                         </div>
 
                         <a href="{% url 'account_reset_password' %}" class="small">
-                            Forgot password?
+                            {% trans "Forgot password?" %}
                         </a>
                     </div>
 
                     <button type="submit" class="btn btn-dark w-100">
-                        Login
+                        {% trans "Login" %}
                     </button>
                 </form>
             </div>
 
             <p class="text-center mt-3 mb-0">
-                Don't have an account?
-                <a href="{% url 'account_signup' %}">Create account</a>
+                {% trans "Don't have an account?" %}
+                <a href="{% url 'account_signup' %}">{% trans "Create account" %}</a>
             </p>
         </div>
     </div>

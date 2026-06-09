@@ -104,6 +104,7 @@ function setSchedulePreviewColors(townshipLinks, activeGroup) {
 
 function initClickableMap() {
     const townshipLinks = getTownshipLinks();
+    let mapMode = "current";
 
     townshipLinks.forEach(function (township) {
         makeTownshipClickable(township);
@@ -112,10 +113,27 @@ function initClickableMap() {
     window.electricityMap = {
         townships: townshipLinks,
         setCurrentStatusColors: function () {
+            mapMode = "current";
             setCurrentStatusColors(townshipLinks);
         },
         setSchedulePreviewColors: function (activeGroup) {
+            mapMode = "schedule-preview";
             setSchedulePreviewColors(townshipLinks, activeGroup);
+        },
+        updateStatuses: function (updatedTownships) {
+            updatedTownships.forEach(function (updatedTownship) {
+                const township = townshipLinks.find(function (item) {
+                    return item.name === updatedTownship.name;
+                });
+
+                if (township) {
+                    township.status = updatedTownship.status;
+                }
+            });
+
+            if (mapMode === "current") {
+                setCurrentStatusColors(townshipLinks);
+            }
         },
     };
 }

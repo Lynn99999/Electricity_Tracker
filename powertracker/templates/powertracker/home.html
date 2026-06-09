@@ -1,15 +1,27 @@
 {% extends "powertracker/base.html" %}
-{% load static %}
+{% load i18n static %}
 
-{% block title %}Home | Electricity Tracker{% endblock %}
+{% block title %}{% trans "Home" %} | {% trans "Electricity Tracker" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="container py-3">
-    <h1 class="h3 mb-3">Yangon Townships</h1>
+<section class="container py-3" data-statuses-url="{% url 'township_statuses' %}">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h3 mb-0">{% trans "Yangon Townships" %}</h1>
+
+        <div class="current-time-pill">
+            <span class="text-secondary">{% trans "Myanmar time" %}</span>
+            <strong
+                data-current-time
+                data-current-time-iso="{{ myanmar_now|date:'c' }}"
+            >
+                {{ myanmar_now|date:"M j, Y g:i:s A" }}
+            </strong>
+        </div>
+    </div>
 
     <div class="row g-4">
         <div class="col-lg-8">
@@ -20,9 +32,9 @@
                     </div>
                 </div>
 
-                <div class="map-controls btn-group btn-group-sm" role="group" aria-label="Map zoom controls">
+                <div class="map-controls btn-group btn-group-sm" role="group" aria-label="{% trans 'Map zoom controls' %}">
                     <button type="button" class="btn btn-light border" data-map-zoom="out">-</button>
-                    <button type="button" class="btn btn-light border" data-map-zoom="reset">Reset</button>
+                    <button type="button" class="btn btn-light border" data-map-zoom="reset">{% trans "Reset" %}</button>
                     <button type="button" class="btn btn-light border" data-map-zoom="in">+</button>
                 </div>
             </div>
@@ -38,20 +50,120 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="h-100">
-                <h2 class="h5">Township Information</h2>
-                <p class="text-muted">
-                    Select a township from the map to view electricity status,
-                    group schedule, and reports.
-                </p>
+            <div class="home-side-panel d-grid gap-3">
+                <div class="border rounded bg-white p-3">
+                    <h2 class="h5 mb-3">{% trans "Check Electricity Status" %}</h2>
 
-                <div class="border rounded p-3">
-                    <p class="mb-2">
-                        <strong>Group A:</strong> Scheduled electricity area.
-                    </p>
-                    <p class="mb-0">
-                        <strong>Group B:</strong> Scheduled electricity area.
-                    </p>
+                    <form method="get" class="d-grid gap-3">
+                        <div>
+                            <label for="township-search" class="form-label">{% trans "Township" %}</label>
+                            <select
+                                id="township-search"
+                                name="township"
+                                class="form-select"
+                                required
+                            >
+                                <option value="" {% if not selected_township %}selected{% endif %}>
+                                    {% trans "Select township" %}
+                                </option>
+
+                                {% for township in townships %}
+                                    <option
+                                        value="{{ township.id }}"
+                                        {% if selected_township and township.id == selected_township.id %}selected{% endif %}
+                                    >
+                                        {{ township.localized_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="status-date" class="form-label">{% trans "Date" %}</label>
+                            <input
+                                id="status-date"
+                                type="date"
+                                name="date"
+                                class="form-control"
+                                min="{{ month_start|date:'Y-m-d' }}"
+                                max="{{ month_end|date:'Y-m-d' }}"
+                                value="{{ selected_date|date:'Y-m-d' }}"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="status-time" class="form-label">{% trans "Time" %}</label>
+                            <input
+                                id="status-time"
+                                type="time"
+                                name="time"
+                                class="form-control"
+                                value="{{ selected_time|time:'H:i' }}"
+                            >
+                        </div>
+
+                        <button type="submit" class="btn btn-dark">
+                            {% trans "Check Status" %}
+                        </button>
+                    </form>
+                </div>
+
+                <div class="border rounded bg-white p-3">
+
+                    {% if selected_township and selected_status %}
+                        <div class="status-result-row d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <p class="status-result-label mb-1">{{ selected_township.localized_name }}</p>
+                                <p class="text-secondary small mb-0">
+                                    {{ selected_date|date:"M j, Y" }} {% trans "at" %} {{ selected_time|time:"g:i A" }}
+                                </p>
+                            </div>
+
+                            <span
+                                class="badge rounded-pill border status-result-badge status-result-badge-{{ selected_status|lower }}"
+                                {% if selected_status == "ON" %}
+                                    style="color: #17485a; background: #d8edf5; border-color: #9bd1e5 !important;"
+                                {% elif selected_status == "OFF" %}
+                                    style="color: #5f6469; background: #f8f9fa; border-color: #d7dce1 !important;"
+                                {% else %}
+                                    style="color: #664d03; background: #fff3cd; border-color: #f6d46b !important;"
+                                {% endif %}
+                            >
+                                {{ selected_status }}
+                            </span>
+                        </div>
+                    {% else %}
+                        <p class="text-secondary mb-0">
+                            {% trans "Choose a township, date, and time to check the electricity status." %}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="border rounded bg-white p-3">
+                    <h3 class="h6 mb-2">{% trans "Map Colors" %}</h3>
+                    <div class="d-grid gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span
+                                class="rounded-circle d-inline-block flex-shrink-0"
+                                style="width: 1rem; height: 1rem; background: #9bd1e5;"
+                            ></span>
+                            <span>{% trans "ON" %}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span
+                                class="rounded-circle d-inline-block border flex-shrink-0"
+                                style="width: 1rem; height: 1rem; background: #ffffff; border-color: #adb5bd !important;"
+                            ></span>
+                            <span>{% trans "OFF" %}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span
+                                class="rounded-circle d-inline-block flex-shrink-0"
+                                style="width: 1rem; height: 1rem; background: #ffcf56;"
+                            ></span>
+                            <span>{% trans "Uncertain" %}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,4 +178,6 @@
 <script src="{% static 'js/map-zoom.js' %}"></script>
 <script src="{% static 'js/clickable-map.js' %}"></script>
 <script src="{% static 'js/schedule-map-preview.js' %}"></script>
+<script src="{% static 'js/home-status-refresh.js' %}"></script>
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

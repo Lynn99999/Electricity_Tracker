@@ -1,7 +1,7 @@
 {% extends "powertracker/base.html" %}
-{% load static %}
+{% load i18n static %}
 
-{% block title %}User Profile | Electricity Tracker{% endblock %}
+{% block title %}{% trans "User Profile" %} | {% trans "Electricity Tracker" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
@@ -9,34 +9,40 @@
 
 {% block content %}
 <section class="profile-page container py-4">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-3">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
     <div class="profile-hero p-4 mb-4">
-        <div class="d-flex align-items-center gap-3">
-            <div class="profile-avatar">
-                {{ request.user.username|first|upper }}
+        <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+            <div class="d-flex align-items-center gap-3">
+                <div class="profile-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div>
+                    <h1 class="h3 mb-1">{% trans "User Profile" %}</h1>
+                    <p class="text-secondary mb-0">{% trans "Manage your account and favorite townships." %}</p>
+                </div>
             </div>
 
-            <div>
-                <h1 class="h3 mb-1">User Profile</h1>
-                <p class="text-secondary mb-0">Manage your account and favorite townships.</p>
-            </div>
+            <form method="post" action="{% url 'account_logout' %}" class="mb-0">
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    class="btn btn-outline-danger profile-logout-button"
+                    aria-label="{% trans 'Logout' %}"
+                    title="{% trans 'Logout' %}"
+                >
+                    &#9211;
+                </button>
+            </form>
         </div>
     </div>
 
     <div class="row g-4">
         <div class="col-lg-5">
             <div class="profile-panel p-4 h-100">
-                <h2 class="h5 mb-4">Account</h2>
+                <h2 class="h5 mb-4">{% trans "Account" %}</h2>
 
-                <div class="mb-4">
-                    <p class="profile-label">Username</p>
+                <div class="account-section">
+                    <p class="profile-label">{% trans "Username" %}</p>
 
                     <div id="username-display" class="d-flex align-items-center gap-2">
                         <span class="profile-value">{{ request.user.username }}</span>
@@ -45,7 +51,7 @@
                             type="button"
                             class="btn btn-sm btn-outline-secondary"
                             id="edit-username-button"
-                            aria-label="Edit username"
+                            aria-label="{% trans 'Edit username' %}"
                         >
                             &#9998;
                         </button>
@@ -69,7 +75,7 @@
                             >
 
                             <button type="submit" class="btn btn-sm btn-dark">
-                                Save
+                                {% trans "Save" %}
                             </button>
 
                             <button
@@ -77,31 +83,46 @@
                                 class="btn btn-sm btn-outline-secondary"
                                 id="cancel-username-button"
                             >
-                                Cancel
+                                {% trans "Cancel" %}
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <div class="mb-4">
-                    <p class="profile-label">Email</p>
-                    <p class="profile-value mb-2">{{ request.user.email|default:"No email set" }}</p>
-                    <a href="{% url 'account_email' %}" class="btn btn-outline-secondary">
-                        Manage Email
-                    </a>
+                <div class="account-section">
+                    <p class="profile-label">{% trans "Email" %}</p>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="profile-value">
+                            {% if request.user.email %}
+                                {{ request.user.email }}
+                            {% else %}
+                                {% trans "No email set" %}
+                            {% endif %}
+                        </span>
+
+                        <a
+                            href="{% url 'account_email' %}"
+                            class="btn btn-sm btn-outline-secondary"
+                            aria-label="{% trans 'Manage email' %}"
+                            title="{% trans 'Manage email' %}"
+                        >
+                            &#9998;
+                        </a>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">
-                        Change Password
+                <div class="profile-actions d-grid gap-3 justify-content-start">
+                    <a href="{% url 'todo_planner' %}" class="btn btn-outline-secondary">
+                        {% trans "Todolist Planner" %}
                     </a>
 
-                    <form method="post" action="{% url 'account_logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger">
-                            Logout
-                        </button>
-                    </form>
+                    <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">
+                        {% trans "Change Password" %}
+                    </a>
+
+                    <a href="{% url 'contact_us' %}" class="btn btn-outline-secondary">
+                        {% trans "Contact Us" %}
+                    </a>
                 </div>
             </div>
         </div>
@@ -109,7 +130,7 @@
         <div class="col-lg-7">
             <div class="profile-panel p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="h5 mb-0">Favorite Townships</h2>
+                    <h2 class="h5 mb-0">{% trans "Favorite Townships" %}</h2>
                     <span class="badge text-bg-light border">
                         {{ favorite_items|length }} / {{ max_favorite_townships }}
                     </span>
@@ -117,7 +138,7 @@
 
                 {% if favorite_items %}
                     <p class="text-secondary small mb-3">
-                        Drag townships to choose your default order.
+                        {% trans "Drag townships to choose your default order." %}
                     </p>
 
                     <div
@@ -143,7 +164,7 @@
                                     href="{% url 'township_detail' favorite.township.id %}"
                                     class="favorite-township-link flex-grow-1 text-decoration-none text-dark"
                                 >
-                                    <h3 class="h6 mb-1">{{ favorite.township.name }}</h3>
+                                    <h3 class="h6 mb-1">{{ favorite.township.localized_name }}</h3>
                                     <span class="d-flex align-items-center gap-2 text-secondary small">
                                         <span class="status-dot status-{{ favorite.township.current_status|lower }}"></span>
                                         {{ favorite.township.current_status }}
@@ -159,9 +180,9 @@
                                     <button
                                         type="submit"
                                         class="btn btn-sm btn-outline-danger"
-                                        aria-label="Remove {{ favorite.township.name }} from favorites"
+                                        aria-label="{% trans 'Remove favorite township' %}"
                                     >
-                                        Delete
+                                        {% trans "Delete" %}
                                     </button>
                                 </form>
                             </div>
@@ -169,12 +190,12 @@
                     </div>
                 {% else %}
                     <div class="empty-favorites p-4 text-center">
-                        <p class="fw-semibold mb-1">No favorite townships yet.</p>
+                        <p class="fw-semibold mb-1">{% trans "No favorite townships yet." %}</p>
                         <p class="text-secondary mb-3">
-                            Open a township detail page and tap the heart icon. You can keep up to {{ max_favorite_townships }} favorites.
+                            {% blocktrans %}Open a township detail page and tap the heart icon. You can keep up to {{ max_favorite_townships }} favorites.{% endblocktrans %}
                         </p>
                         <a href="{% url 'home' %}" class="btn btn-dark">
-                            Browse Map
+                            {% trans "Browse Map" %}
                         </a>
                     </div>
                 {% endif %}

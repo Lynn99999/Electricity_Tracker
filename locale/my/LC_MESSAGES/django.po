@@ -1,0 +1,311 @@
+msgid ""
+msgstr "Project-Id-Version: electricity-tracker 1.0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2026-06-09 00:00+0000\nPO-Revision-Date: 2026-06-09 00:00+0000\nLast-Translator: Codex <codex@example.com>\nLanguage-Team: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Account"
+msgstr "အကောင့်"
+
+msgid "Account issues"
+msgstr "အကောင့်ပြဿနာ"
+
+msgid "Already have an account?"
+msgstr "အကောင့်ရှိပြီးသားလား။"
+
+msgid "Back Home"
+msgstr "မူလစာမျက်နှာသို့"
+
+msgid "Back to Profile"
+msgstr "ပရိုဖိုင်သို့ ပြန်သွားရန်"
+
+msgid "Back to top"
+msgstr "အပေါ်သို့ ပြန်သွားရန်"
+
+msgid "Before You Send"
+msgstr "မပို့မီ"
+
+msgid "Browse Map"
+msgstr "မြေပုံကြည့်ရန်"
+
+msgid "Cancel"
+msgstr "မလုပ်တော့ပါ"
+
+msgid "Category"
+msgstr "အမျိုးအစား"
+
+msgid "Change Password"
+msgstr "စကားဝှက်ပြောင်းရန်"
+
+msgid "Charge laptop, 30 minutes, needs electricity"
+msgstr "လက်ပ်တော့အားသွင်းရန်၊ ၃၀ မိနစ်၊ လျှပ်စစ်လိုအပ်"
+
+msgid "Check Electricity Status"
+msgstr "လျှပ်စစ်အခြေအနေ စစ်ဆေးရန်"
+
+msgid "Check Status"
+msgstr "အခြေအနေ စစ်ဆေးရန်"
+
+msgid "Choose a township, date, and time to check the electricity status."
+msgstr "လျှပ်စစ်အခြေအနေစစ်ရန် မြို့နယ်၊ ရက်စွဲ၊ အချိန် ရွေးပါ။"
+
+msgid "Choose category"
+msgstr "အမျိုးအစားရွေးပါ"
+
+msgid "Close"
+msgstr "ပိတ်ရန်"
+
+msgid "Confirm password"
+msgstr "စကားဝှက်အတည်ပြုရန်"
+
+msgid "Contact Us"
+msgstr "ဆက်သွယ်ရန်"
+
+msgid "Cook dinner, 45 minutes, needs electricity"
+msgstr "ညစာချက်ရန်၊ ၄၅ မိနစ်၊ လျှပ်စစ်လိုအပ်"
+
+msgid "Create Account"
+msgstr "အကောင့်ဖန်တီးရန်"
+
+msgid "Create account"
+msgstr "အကောင့်ဖန်တီးရန်"
+
+msgid "Current map status"
+msgstr "လက်ရှိမြေပုံအခြေအနေ"
+
+msgid "Date"
+msgstr "ရက်စွဲ"
+
+msgid "Delete"
+msgstr "ဖျက်ရန်"
+
+msgid "Do you have electricity now?"
+msgstr "အခု မီးလာနေပါသလား။"
+
+msgid "Don't have an account?"
+msgstr "အကောင့်မရှိသေးပါသလား။"
+
+msgid "Download .ics"
+msgstr ".ics ဒေါင်းလုဒ်"
+
+msgid "Drag townships to choose your default order."
+msgstr "မူရင်းအစီအစဉ်သတ်မှတ်ရန် မြို့နယ်များကို ဆွဲရွှေ့ပါ။"
+
+msgid "Edit username"
+msgstr "အသုံးပြုသူအမည် ပြင်ရန်"
+
+msgid "Efficiency Tips"
+msgstr "ထိရောက်မှု အကြံပြုချက်များ"
+
+msgid "Electricity Tracker"
+msgstr "လျှပ်စစ်ခြေရာခံ"
+
+msgid "Email"
+msgstr "အီးမေးလ်"
+
+msgid "Email is not configured yet."
+msgstr "အီးမေးလ် မပြင်ဆင်ရသေးပါ။"
+
+msgid "Example:"
+msgstr "ဥပမာ-"
+
+msgid "Expected from schedule"
+msgstr "အချိန်ဇယားအရ ခန့်မှန်းချက်"
+
+msgid "Favorite Townships"
+msgstr "အကြိုက်ဆုံးမြို့နယ်များ"
+
+msgid "Forgot password?"
+msgstr "စကားဝှက်မေ့နေပါသလား။"
+
+msgid "Gemini did not return schedule blocks. Try adding clearer task durations."
+msgstr "Gemini မှ အချိန်ပိုင်းများ မပြန်လာပါ။ လုပ်ငန်းကြာချိန်ကို ပိုရှင်းရှင်းရေးပါ။"
+
+msgid "Generate Plan"
+msgstr "အစီအစဉ် ဖန်တီးရန်"
+
+msgid "Generated Plan"
+msgstr "ဖန်တီးထားသောအစီအစဉ်"
+
+msgid "Home"
+msgstr "မူလစာမျက်နှာ"
+
+msgid "Include township, time, and whether electricity was actually on or off."
+msgstr "မြို့နယ်၊ အချိန်နှင့် မီးတကယ်လာ/ပျက် အချက်အလက်ထည့်ပါ။"
+
+msgid "Language"
+msgstr "ဘာသာစကား"
+
+msgid "Login"
+msgstr "လော့ဂ်အင်"
+
+msgid "Login to add favorites"
+msgstr "အကြိုက်ဆုံးထည့်ရန် လော့ဂ်အင်ဝင်ပါ"
+
+msgid "Login to thumb down"
+msgstr "တင်ပြရန် လော့ဂ်အင်ဝင်ပါ"
+
+msgid "Login to thumb up"
+msgstr "တင်ပြရန် လော့ဂ်အင်ဝင်ပါ"
+
+msgid "Logout"
+msgstr "ထွက်ရန်"
+
+msgid "Manage email"
+msgstr "အီးမေးလ် စီမံရန်"
+
+msgid "Manage your account and favorite townships."
+msgstr "သင့်အကောင့်နှင့် အကြိုက်ဆုံးမြို့နယ်များကို စီမံပါ။"
+
+msgid "Map Colors"
+msgstr "မြေပုံအရောင်များ"
+
+msgid "Map zoom controls"
+msgstr "မြေပုံချဲ့/ချုံ့ ထိန်းချုပ်မှု"
+
+msgid "Message"
+msgstr "စာသား"
+
+msgid "Myanmar time"
+msgstr "မြန်မာအချိန်"
+
+msgid "Name"
+msgstr "အမည်"
+
+msgid "No email set"
+msgstr "အီးမေးလ် မသတ်မှတ်ရသေးပါ"
+
+msgid "No favorite townships yet."
+msgstr "အကြိုက်ဆုံးမြို့နယ် မရှိသေးပါ။"
+
+msgid "No schedule"
+msgstr "အချိန်ဇယားမရှိပါ"
+
+msgid "OFF"
+msgstr "မီးပျက်"
+
+msgid "ON"
+msgstr "မီးလာ"
+
+msgid "Off"
+msgstr "မီးပျက်"
+
+msgid "On"
+msgstr "မီးလာ"
+
+msgid "Open a township detail page and tap the heart icon. You can keep up to %(max_favorite_townships)s favorites."
+msgstr "မြို့နယ်အသေးစိတ်စာမျက်နှာတွင် နှလုံးသင်္ကေတကိုနှိပ်ပါ။ အများဆုံး %(max_favorite_townships)s ခု သိမ်းနိုင်သည်။"
+
+msgid "Optional"
+msgstr "မဖြစ်မနေမဟုတ်"
+
+msgid "Output language"
+msgstr "ထွက်ရှိမည့်ဘာသာစကား"
+
+msgid "Password"
+msgstr "စကားဝှက်"
+
+msgid "Plan your tasks around your township's electricity ON hours."
+msgstr "သင့်မြို့နယ် မီးလာချိန်အလိုက် လုပ်စရာများကို စီစဉ်ပါ။"
+
+msgid "Read notes, 60 minutes, no electricity needed"
+msgstr "မှတ်စုဖတ်ရန်၊ ၆၀ မိနစ်၊ လျှပ်စစ်မလို"
+
+msgid "Remember me"
+msgstr "မှတ်ထားရန်"
+
+msgid "Remove favorite township"
+msgstr "အကြိုက်ဆုံးမြို့နယ် ဖယ်ရန်"
+
+msgid "Report electricity off"
+msgstr "မီးပျက်ကြောင်း တင်ပြရန်"
+
+msgid "Report electricity on"
+msgstr "မီးလာကြောင်း တင်ပြရန်"
+
+msgid "Reset"
+msgstr "ပြန်စရန်"
+
+msgid "Save"
+msgstr "သိမ်းရန်"
+
+msgid "Schedule"
+msgstr "အချိန်ဇယား"
+
+msgid "Schedule issues"
+msgstr "အချိန်ဇယားပြဿနာ"
+
+msgid "Select township"
+msgstr "မြို့နယ်ရွေးပါ"
+
+msgid "Send Message"
+msgstr "စာပို့ရန်"
+
+msgid "Status issues"
+msgstr "အခြေအနေပြဿနာ"
+
+msgid "Study Django, 90 minutes, high priority"
+msgstr "Django လေ့လာရန်၊ ၉၀ မိနစ်၊ ဦးစားပေး"
+
+msgid "Support"
+msgstr "အကူအညီ"
+
+msgid "Support email"
+msgstr "အကူအညီအီးမေးလ်"
+
+msgid "Tasks"
+msgstr "လုပ်စရာများ"
+
+msgid "Tell us about wrong status, schedule data issues, account problems, or product feedback."
+msgstr "မှားယွင်းသောအခြေအနေ၊ အချိန်ဇယားပြဿနာ၊ အကောင့်ပြဿနာ သို့မဟုတ် အကြံပြုချက်ကို ပြောပြပါ။"
+
+msgid "Tell us the date and time block that looked wrong."
+msgstr "မှားနေသည်ဟုထင်သော ရက်စွဲနှင့် အချိန်ပိုင်းကို ပြောပြပါ။"
+
+msgid "Time"
+msgstr "အချိန်"
+
+msgid "Today"
+msgstr "ယနေ့"
+
+msgid "Todolist Planner"
+msgstr "လုပ်ရန်စာရင်း စီစဉ်သူ"
+
+msgid "Toggle favorite"
+msgstr "အကြိုက်ဆုံး ပြောင်းရန်"
+
+msgid "Township"
+msgstr "မြို့နယ်"
+
+msgid "Uncertain"
+msgstr "မသေချာ"
+
+msgid "Use the email connected to your account when possible."
+msgstr "ဖြစ်နိုင်ပါက သင့်အကောင့်နှင့်ချိတ်ထားသော အီးမေးလ်ကို အသုံးပြုပါ။"
+
+msgid "User Profile"
+msgstr "အသုံးပြုသူပရိုဖိုင်"
+
+msgid "User profile"
+msgstr "အသုံးပြုသူပရိုဖိုင်"
+
+msgid "Username"
+msgstr "အသုံးပြုသူအမည်"
+
+msgid "Username or email"
+msgstr "အသုံးပြုသူအမည် သို့မဟုတ် အီးမေးလ်"
+
+msgid "Yangon Electricity Tracker"
+msgstr "ရန်ကုန် လျှပ်စစ်ခြေရာခံ"
+
+msgid "Yangon Townships"
+msgstr "ရန်ကုန်မြို့နယ်များ"
+
+msgid "Yesterday"
+msgstr "မနေ့က"
+
+msgid "You can download it as an .ics file and import it into Google Calendar, Apple Calendar, or Outlook."
+msgstr ".ics ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်ပြီး Google Calendar၊ Apple Calendar သို့မဟုတ် Outlook ထဲသို့ ထည့်နိုင်သည်။"
+
+msgid "Your generated schedule will appear here."
+msgstr "ဖန်တီးထားသောအချိန်ဇယားကို ဒီမှာ ပြပါမည်။"
+
+msgid "at"
+msgstr "တွင်"

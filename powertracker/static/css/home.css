@@ -92,8 +92,10 @@
     border: 0;
     background: transparent;
     color: #6c757d;
+    cursor: default;
     font-weight: 600;
     padding: 0;
+    user-select: none;
 }
 
 .schedule-hour-label {
@@ -127,4 +129,70 @@
     content: "💡";
     font-size: 1rem;
     line-height: 1;
+}
+
+.home-side-panel {
+    align-content: start;
+}
+
+.current-time-pill {
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 0.45rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    font-size: 0.95rem;
+}
+
+.status-result-label {
+    font-weight: 700;
+}
+
+.status-result-badge {
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-result-badge-on {
+    color: #17485a;
+    background: #d8edf5;
+    border: 1px solid #9bd1e5;
+}
+
+.status-result-badge-off {
+    color: #5f6469;
+    background: #f8f9fa;
+    border: 1px solid #d7dce1;
+}
+
+.status-result-badge-unknown,
+.status-result-badge-uncertain {
+    color: #664d03;
+    background: #fff3cd;
+    border: 1px solid #f6d46b;
+}
+
+.map-legend-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 999px;
+    display: inline-block;
+    flex: 0 0 auto;
+}
+
+.map-legend-on {
+    background: #9bd1e5;
+}
+
+.map-legend-off {
+    background: #ffffff;
+    border: 1px solid #adb5bd;
+}
+
+.map-legend-uncertain {
+    background: #ffcf56;
 }

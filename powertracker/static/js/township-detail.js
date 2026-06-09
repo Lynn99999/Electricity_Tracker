@@ -214,4 +214,95 @@ function focusMiniMapOnTownship() {
     );
 }
 
+function getStatusBadgeClass(status) {
+    if (status === "ON") {
+        return "text-bg-info";
+    }
+
+    if (status === "OFF") {
+        return "text-bg-secondary";
+    }
+
+    return "text-bg-warning";
+}
+
+function updateStatusBadge(type, status) {
+    const badge = document.querySelector(`[data-status-badge="${type}"]`);
+
+    if (!badge) {
+        return;
+    }
+
+    badge.textContent = status;
+    badge.classList.remove("text-bg-info", "text-bg-secondary", "text-bg-warning");
+    badge.classList.add(getStatusBadgeClass(status));
+}
+
+function updateReportButtons(reportedStatus) {
+    document.querySelectorAll("[data-report-button]").forEach(function (button) {
+        const status = button.dataset.reportButton;
+
+        button.classList.remove(
+            "btn-success",
+            "btn-outline-success",
+            "btn-danger",
+            "btn-outline-danger"
+        );
+
+        if (status === "ON") {
+            button.classList.add(
+                reportedStatus === "ON" ? "btn-success" : "btn-outline-success"
+            );
+        }
+
+        if (status === "OFF") {
+            button.classList.add(
+                reportedStatus === "OFF" ? "btn-danger" : "btn-outline-danger"
+            );
+        }
+    });
+}
+
+function updateTownshipDetail(data) {
+    if (!window.townshipDetail) {
+        return;
+    }
+
+    window.townshipDetail.status = data.current_status;
+
+    updateStatusBadge("expected", data.expected_status);
+    updateStatusBadge("current", data.current_status);
+    updateReportButtons(data.reported_status);
+    focusMiniMapOnTownship();
+}
+
+function refreshTownshipDetailStatus() {
+    const root = document.querySelector("[data-township-status-url]");
+
+    if (!root) {
+        return;
+    }
+
+    fetch(root.dataset.townshipStatusUrl, {
+        headers: {
+            "Accept": "application/json",
+        },
+    })
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Could not load township status.");
+            }
+
+            return response.json();
+        })
+        .then(updateTownshipDetail)
+        .catch(function (error) {
+            console.error(error);
+        });
+}
+
 focusMiniMapOnTownship();
+
+if (document.querySelector("[data-township-status-url]")) {
+    setInterval(refreshTownshipDetailStatus, 30000);
+}

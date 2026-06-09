@@ -4,7 +4,7 @@
 
 .township-summary {
     position: sticky;
-    top: 64px;
+    top: 1rem;
 }
 
 @media (min-width: 992px) {
@@ -84,8 +84,32 @@
     background: #ffcf56;
 }
 
+.status-summary {
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background: #f8f9fa;
+}
+
+.report-panel {
+    border-top: 1px solid #e9ecef;
+    padding-top: 0.75rem;
+}
+
 .report-button {
     font-size: 1.25rem;
+}
+
+.detail-current-time-pill {
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 0.45rem 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .schedule-day {
@@ -103,8 +127,10 @@
 
 .schedule-slot-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(112px, 1fr));
     gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
 }
 
 .schedule-slot {
@@ -120,24 +146,25 @@
 }
 
 .schedule-slot.is-on {
-    color: #1f7a4d;
-    background: #d8f8e5;
-    border-color: #b5edcc;
+    color: #17485a;
+    background: #d8edf5;
+    border-color: #9bd1e5;
 }
 
 .schedule-slot.is-off {
-    color: #b02a37;
-    background: #fff1f2;
-    border-color: #f6cdd2;
+    color: #5f6469;
+    background: #ffffff;
+    border-color: #d7dce1;
 }
 
 .schedule-slot-time {
     font-size: 0.85rem;
 }
 
-.schedule-slot-icon {
-    font-size: 1.35rem;
+.schedule-slot-status {
+    font-size: 0.95rem;
     line-height: 1;
+    letter-spacing: 0;
 }
 
 @media (max-width: 991.98px) {
@@ -145,13 +172,4 @@
         position: static;
     }
 
-    .schedule-slot-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 575.98px) {
-    .schedule-slot-grid {
-        grid-template-columns: 1fr;
-    }
 }

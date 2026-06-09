@@ -10,11 +10,10 @@ function getTimelinePoints() {
 
 function buildScheduleTrack(track, points) {
     points.forEach(function (point, index) {
-        const item = document.createElement("button");
+        const item = document.createElement("div");
         const marker = document.createElement("span");
         const label = document.createElement("span");
 
-        item.type = "button";
         item.className = "schedule-hour";
         item.dataset.pointIndex = index;
 
@@ -63,12 +62,8 @@ function updateSelectedTime(selectedTime, point) {
     selectedTime.textContent = point.label;
 }
 
-function updateActiveHour(scroll, points, selectedTime, selectedIndex) {
-    const focusedIndex = (
-        selectedIndex === undefined
-            ? getFocusedPointIndex(scroll, points)
-            : selectedIndex
-    );
+function updateActiveHour(scroll, points, selectedTime) {
+    const focusedIndex = getFocusedPointIndex(scroll, points);
     const items = Array.from(scroll.querySelectorAll(".schedule-hour"));
 
     items.forEach(function (item, index) {
@@ -77,13 +72,6 @@ function updateActiveHour(scroll, points, selectedTime, selectedIndex) {
 
     updateSelectedTime(selectedTime, points[focusedIndex]);
     previewPointOnMap(points[focusedIndex]);
-}
-
-function scrollHourIntoView(scroll, item) {
-    const maxScrollLeft = scroll.scrollWidth - scroll.clientWidth;
-    const targetLeft = item.offsetLeft - 16;
-
-    scroll.scrollLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
 }
 
 function initScheduleMapPreview() {
@@ -99,19 +87,6 @@ function initScheduleMapPreview() {
 
     buildScheduleTrack(track, points);
     updateActiveHour(scroll, points, selectedTime);
-
-    track.addEventListener("click", function (event) {
-        const item = event.target.closest(".schedule-hour");
-
-        if (!item) {
-            return;
-        }
-
-        const selectedIndex = Number(item.dataset.pointIndex);
-
-        scrollHourIntoView(scroll, item);
-        updateActiveHour(scroll, points, selectedTime, selectedIndex);
-    });
 
     scroll.addEventListener("scroll", function () {
         updateActiveHour(scroll, points, selectedTime);

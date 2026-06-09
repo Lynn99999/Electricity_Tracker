@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offline Schedule | Electricity Tracker</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/offline.css' %}">
+</head>
+<body>
+    <span class="d-none" data-offline-data-url="{% url 'offline_data' %}"></span>
+
+    <main class="offline-page">
+        <div class="container py-4">
+            <div class="offline-shell mx-auto">
+                <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
+                    <div>
+                        <p class="text-secondary fw-semibold mb-2">Electricity Tracker -Offline mode</p>
+                        <h2 class="display-6 fw-bold mb-2">Cached Schedule</h2>
+                        <p class="lead text-secondary mb-0">
+                            Live status and reports are unavailable until the connection returns.
+                        </p>
+                    </div>
+
+                    <button type="button" class="btn btn-dark" data-offline-retry>
+                        Try Again
+                    </button>
+                </div>
+
+                <div class="offline-meta card shadow-sm mb-4">
+                    <div class="card-body d-flex flex-wrap align-items-center justify-content-between gap-3">
+                        <div>
+                            <p class="text-secondary small mb-1">Showing</p>
+                            <strong data-offline-title>Offline schedule</strong>
+                        </div>
+
+                        <div class="offline-selector btn-group" role="group" aria-label="Choose offline schedule" data-offline-selector>
+                        </div>
+
+                        <div class="text-md-end">
+                            <p class="text-secondary small mb-1">Cached at</p>
+                            <strong data-offline-cached-at>Not available</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-4" data-offline-content>
+                    <section class="offline-empty card shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <h2 class="h5 mb-2">No cached schedule yet</h2>
+                            <p class="text-secondary mb-3">
+                                Open the website once while online, then this page can show your saved schedule.
+                            </p>
+                            <button type="button" class="btn btn-outline-secondary" data-offline-retry>
+                                Try Again
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/offline-cache.js' %}"></script>
+    <script src="{% static 'js/register-service-worker.js' %}"></script>
+    <script src="{% static 'js/offline.js' %}"></script>
+</body>
+</html>
